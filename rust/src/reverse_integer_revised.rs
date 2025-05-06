@@ -15,7 +15,6 @@ impl Solution {
         if reversed > i32::MAX as i64 || reversed < i32::MIN as i64 {
             return 0;
         }
-        println!("{reversed}");
         reversed as i32
     }
 }

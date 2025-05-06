@@ -1,8 +1,11 @@
-mod reverse_integer_revised;
+mod my_atoi;
 
 fn main() {
-    reverse_integer_revised::Solution::reverse(1234);
-    reverse_integer_revised::Solution::reverse(-456);
-    reverse_integer_revised::Solution::reverse(-58392016);
+    let res = my_atoi::Solution::my_atoi("42".to_string());
+    println!("Result: {res:?}");
+    let res = my_atoi::Solution::my_atoi("-32".to_string());
+    println!("Result: {res:?}");
+    let res = my_atoi::Solution::my_atoi("-91283472332".to_string());
+    println!("Result: {res:?}");
     println!("Hello, world!");
 }
