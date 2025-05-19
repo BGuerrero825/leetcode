@@ -1,11 +1,8 @@
-mod my_atoi;
+mod contain_most_water;
 
 fn main() {
-    let res = my_atoi::Solution::my_atoi("42".to_string());
-    println!("Result: {res:?}");
-    let res = my_atoi::Solution::my_atoi("-32".to_string());
-    println!("Result: {res:?}");
-    let res = my_atoi::Solution::my_atoi("-91283472332".to_string());
+    let list = vec![4,1,2,5];
+    let res = contain_most_water::Solution::max_area(list);
     println!("Result: {res:?}");
     println!("Hello, world!");
 }
