@@ -38,6 +38,30 @@ impl Solution {
     }
 
     pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
+      let mut dummy = Box::new(ListNode{val: 0, next: head});
+      let mut curr = &dummy.next;
+      let mut len = 1;
+
+      while let Some(node) = curr {
+        curr = &node.next;
+        len += 1;
+      }
+
+      let remove_index = len - n;
+      let mut curr = &mut dummy;
+      for _ in 0..remove_index {
+        curr = curr.next.as_mut()?;
+      }
+
+      if let Some(removee) = curr.next.clone() {
+        curr.next = removee.next
+      }
+
+      dummy.next
+    }
+
+/* 
+    pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
         let mut dummy = Box::new(ListNode { val: 0, next: head });
         let mut len = 0;
         let mut curr = &dummy.next;
@@ -59,4 +83,7 @@ impl Solution {
         dummy.next
 
     }
+
+*/
+
 }
