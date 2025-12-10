@@ -1,38 +1,28 @@
 #include <string>
 #include <vector>
-#include <iostream>
 
 using namespace std;
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
         vector<string> valids;
-        place_paren(1, 0, 0, "", n, valids);
+        place_paren(n, n, "", valids);
         return valids;
     }
 
-    void place_paren(bool putleft, int lcount, int rcount, string seq, int n, vector<string> &valids) {
-        if (putleft) {
-            if (lcount + 1 > n) {
-                return;
-            }
-            seq = seq.append("(");
-            lcount++;
-        }
-        else if (!putleft) {
-            if (rcount + 1 > lcount) {
-                return;
-            }
-            seq = seq.append(")");
-            rcount++;
-        }
-
-        if (lcount == n && rcount == n) {
+    void place_paren(int lcount, int rcount, string seq, vector<string> &valids) {
+        if (lcount == 0 && rcount == 0) {
             valids.push_back(seq);
         }
 
-        place_paren(1, lcount, rcount, seq, n, valids);
-        place_paren(0, lcount, rcount, seq, n, valids);
+        if (lcount - 1 >= 0) {
+            place_paren(lcount-1, rcount, seq.append("("), valids);
+            seq.pop_back();
+        }
+
+        if (rcount - 1 >= lcount) {
+            place_paren(lcount, rcount-1, seq.append(")"), valids);
+        }
 
         return;
     }
