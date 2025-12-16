@@ -7,28 +7,30 @@ class Solution {
 public:
   vector<vector<int>> threeSum(vector<int>& nums) {
     vector<vector<int>> answers;
-    int max = *max_element(nums.begin(), nums.end());
-    int min = *min_element(nums.begin(), nums.end());
+    sort(nums.begin(), nums.end());
+    int min = nums[0];
+    int max = nums[nums.size()-1];
     for (int i = 0; i < nums.size(); i++) {
-      for (int j = i+1; j < nums.size(); j++) {
-        int twosum = nums[i] + nums[j];
-        if (twosum > -min || twosum < -max) {
-          continue;
-        }
-        for (int k = j+1; k < nums.size(); k++) {
-          if (nums[k] == -twosum) {
-            vector<int> ans = {nums[i], nums[j], nums[k]};
-            sort(ans.begin(), ans.end());
-            bool dupe = false;
-            for (vector<int> vec : answers) {
-              if (vec == ans) {
-                dupe = true; 
-              }
-            }
-            if (!dupe) {
-              answers.push_back(ans);
+      int j = i+1;
+      int k = nums.size()-1;
+      while(j < k) {
+        long sum = nums[i] + nums[j] + nums[k];
+        if (sum == 0) {
+          vector<int> sumvec = vector<int> {nums[i], nums[j], nums[k]};
+          bool dupe = false;
+          for (vector<int> vec : answers) {
+            if (sumvec == vec) {
+              dupe = true; break;
             }
           }
+          if (!dupe){
+            answers.push_back(vector<int> {nums[i], nums[j], nums[k]});
+          }
+          j++;
+        } else if (sum < 0) {
+          j++;
+        } else {
+          k--;
         }
       }
     }
@@ -40,5 +42,15 @@ public:
 int main() {
   Solution sol;
   vector<int> nums = {-1,0,1,2,-1,-4};
-  sol.threeSum(nums);
+  vector<vector<int>> ans = sol.threeSum(nums);
+  for (vector<int> vec : ans) {
+    cout << "{";
+    for (int num : vec) {
+      cout << num << ",";
+    }
+    cout << "\b";
+    cout << "}  ";
+  }
+  cout << endl;
+
 }
