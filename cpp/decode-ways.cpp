@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <iostream>
 #include <string_view>
 
@@ -6,7 +7,32 @@ using namespace std;
 class Solution {
 public:
     uint length = 0;
+
     int numDecodings(string s) {
+      uint len = s.length();
+      if (len == 0) { return 1; }
+      if (s[0] == '0') { return 0; }
+      if (len == 1) { return 1; }
+
+      vector<int> ways(len+1, 0); 
+      ways[0] = 1;
+      ways[1] = 0;
+      if (s[0] > '0') {
+        ways[1] = 1;
+      }
+      for (int idx = 2; idx <= len; idx++) {
+        if (s[idx-1] > '0') {
+          ways[idx] += ways[idx-1];
+        }
+        if ((s[idx-2] == '1') ||
+            (s[idx-2] == '2' && (s[idx-1] >= '0' && s[idx-1] < '7'))) {
+          ways[idx] += ways[idx-2];
+        }
+      }
+      return ways.back();
+    }
+
+    int recurse_numDecodings(string s) {
       this->length = s.length();
       int result = 0;
       string_view sv(s);
@@ -42,7 +68,8 @@ public:
 
 int main() {
   Solution sol = Solution();
-  uint ways = sol.numDecodings("2611055971756562");
-  cout << "ways: " << ways << endl;
+  //uint ways = sol.numDecodings("2611055971756562");
+  uint ways = sol.numDecodings("06");
+  cout << "final ways: " << ways << endl;
 
 }
