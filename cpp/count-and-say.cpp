@@ -5,39 +5,31 @@ using namespace std;
 class Solution {
 public:
     string countAndSay(int n) {
-      string out = "1";
-      string tmp = "";
-      if (n == 1) {
-        return out;
-      }
-      for (int i = 1; i < n; i++) {
-        int consec = 1;
-        char prev = 0;
-        tmp.assign("");
-        for (int c = 0; c < out.size(); c++) {
-          if (prev == 0) {
-          }
-          else if (out[c] == prev) {
+      if (n == 1) return "1";
+
+      string current = "1";
+
+      for (int iter = 2; iter <= n; iter++) {
+        string next = "";
+        next.reserve(current.size() * 2);
+        for (int ch = 0; ch < current.size(); ch++) {
+          int consec = 1;
+          while (ch+1 < current.size() && current[ch] == current[ch+1]) {
             consec++;
+            ch++;
           }
-          else {
-            tmp.append(to_string(consec));
-            tmp.append(string(1, prev));
-            consec = 1;
-          }
-          prev = out[c];
+          next.push_back(consec+'0');
+          next.push_back(current[ch]);
         }
-        tmp.append(to_string(consec));
-        tmp.append(string(1, prev));
-        out.assign(tmp);
+        current = std::move(next);
       }
-      return out;
+      return current;
     }
 };
 
 int main() {
   Solution sol;
-  string ans = sol.countAndSay(4);
+  string ans = sol.countAndSay(20);
   cout << ans << endl;
 }
 
